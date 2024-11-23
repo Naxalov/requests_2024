@@ -1,3 +1,5 @@
 import requests
-
-print(requests.__version__)
+ 
+r = requests.get('https://randomuser.me/api/')
+# Print status code
+print(r.status_code)
