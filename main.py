@@ -1,18 +1,28 @@
 import requests
 import json 
 
-r = requests.get('https://randomuser.me/api/')
-# Print status code
-print(r.status_code)
-# print text of response
-text = r.text
-# convert text to json
-json_data = json.loads(text)
 
-# Get full name
-first_name = json_data['results'][0]['name']['first']
-last_name = json_data['results'][0]['name']['last']
 
-# Get full name
-full_name = first_name + " " + last_name
-print(full_name)
+
+number_of_users = 10
+users = []
+
+while len(users) < number_of_users:
+    r = requests.get('https://randomuser.me/api/')
+    print(r.status_code)
+    user = r.json()['results'][0]
+    gender = user['gender']
+    if gender == 'male':
+
+        users.append(
+            {
+                'first_name': user['name']['first'],
+                'last_name': user['name']['last'],
+                'country': user['location']['country'],
+                'city': user['location']['city'],
+            }
+        )
+
+with open('users.json', 'w', encoding='utf-8') as f:
+    json.dump(users, f, ensure_ascii=False, indent=4)
+
