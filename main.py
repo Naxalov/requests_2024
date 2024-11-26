@@ -2,27 +2,13 @@ import requests
 import json 
 
 
+API_KEY = 'a45a594e67814c30883787b95fec5af1'
+base_url = 'https://randommer.io/api/Phone/Countries'
+headers = {
+    'X-Api-Key': API_KEY
+}
 
+response = requests.get(base_url, headers=headers)
+data = response.json()
 
-number_of_users = 10
-users = []
-
-while len(users) < number_of_users:
-    r = requests.get('https://randomuser.me/api/')
-    print(r.status_code)
-    user = r.json()['results'][0]
-    gender = user['gender']
-    if gender == 'male':
-
-        users.append(
-            {
-                'first_name': user['name']['first'],
-                'last_name': user['name']['last'],
-                'country': user['location']['country'],
-                'city': user['location']['city'],
-            }
-        )
-
-with open('users.json', 'w', encoding='utf-8') as f:
-    json.dump(users, f, ensure_ascii=False, indent=4)
-
+print(data)
